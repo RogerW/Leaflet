@@ -16,6 +16,7 @@ import {svgCreate} from '../layer/vector/SVG.Util';
  */
 
 var style = document.documentElement.style;
+var /** @type {?} */ isBrowser = typeof document === 'object' && !!document;
 
 // @property ie: Boolean; `true` for all Internet Explorer versions (not Edge).
 export var ie = 'ActiveXObject' in window;
@@ -24,7 +25,7 @@ export var ie = 'ActiveXObject' in window;
 export var ielt9 = ie && !document.addEventListener;
 
 // @property edge: Boolean; `true` for the Edge web browser.
-export var edge = 'msLaunchUri' in navigator && !('documentMode' in document);
+export var edge = isBrowser && 'msLaunchUri' in navigator && !('documentMode' in document);
 
 // @property webkit: Boolean;
 // `true` for webkit-based browsers like Chrome and Safari (including mobile versions).
@@ -61,7 +62,7 @@ export var phantom = userAgentContains('phantom');
 export var opera12 = 'OTransition' in style;
 
 // @property win: Boolean; `true` when the browser is running in a Windows platform
-export var win = navigator.platform.indexOf('Win') === 0;
+export var win = isBrowser && navigator.platform.indexOf('Win') === 0;
 
 // @property ie3d: Boolean; `true` for all Internet Explorer versions supporting CSS transforms.
 export var ie3d = ie && ('transition' in style);
@@ -143,5 +144,6 @@ export var vml = !svg && (function () {
 
 
 function userAgentContains(str) {
-	return navigator.userAgent.toLowerCase().indexOf(str) >= 0;
+	var /** @type {?} */ isBrowser = typeof document === 'object' && !!document;
+	return isBrowser && navigator.userAgent.toLowerCase().indexOf(str) >= 0;
 }
